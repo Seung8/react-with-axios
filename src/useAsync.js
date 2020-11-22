@@ -27,7 +27,7 @@ function reducer(state, action) {
 
 // callback : API 호출 함수
 // deps: 컴포넌트가 로딩됐을 때, 값이 변경됐을 때 useEffect의 deps
-export default function useAsync(callback, deps = []) {
+export default function useAsync(callback, deps = [], skip = false) {
   const [state, dispatch] = useReducer(reducer, {
     loading: false,
     data: null,
@@ -45,6 +45,7 @@ export default function useAsync(callback, deps = []) {
   }, [callback]);
 
   useEffect(() => {
+    if (skip) return;
     fetchData();
   }, deps);
 
