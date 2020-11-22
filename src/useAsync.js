@@ -34,7 +34,7 @@ export default function useAsync(callback, deps = []) {
     error: null,
   });
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     dispatch({ type: 'LOADING' });
     try {
       const data = await callback();
@@ -42,7 +42,7 @@ export default function useAsync(callback, deps = []) {
     } catch (e) {
       dispatch({ type: 'ERROR', error: e });
     }
-  };
+  }, [callback]);
 
   useEffect(() => {
     fetchData();
